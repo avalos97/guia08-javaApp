@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportePelicula" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e0d4d72e-e259-4a31-8b10-ba3d0c7d3da1">
+	<property name="template.engine" value="tabular_template"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conexionCine"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="tableDataset" uuid="8997ecc5-ea61-4e76-88eb-9715db007304">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conexionCine"/>
+		<queryString language="SQL">
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="fecha1" class="java.sql.Date"/>
+	<parameter name="fecha2" class="java.sql.Date"/>
+	<queryString>
+		<![CDATA[SELECT p.id_pelicula, p.fecha_estreno, p.duracion, p.titulo, d.nombre, g.nombre 
+FROM pelicula p 
+JOIN director d 
+ON p.id_director=d.id_director 
+JOIN genero g 
+JOIN genero_pelicula gp 
+ON gp.id_genero=g.id_genero 
+ON p.id_pelicula=gp.id_pelicula 
+WHERE (d.activo=true) 
+AND (p.fecha_estreno 
+BETWEEN '$F{fecha1}'AND '$F{fecha2}') 
+AND (g.nombre='animada' OR g.nombre='terror')]]>
+	</queryString>
+	<field name="id_pelicula" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_pelicula"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pelicula"/>
+	</field>
+	<field name="fecha_estreno" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_estreno"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pelicula"/>
+	</field>
+	<field name="duracion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="duracion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pelicula"/>
+	</field>
+	<field name="titulo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="titulo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pelicula"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="director"/>
+	</field>
+	<field name="COLUMN_6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="genero"/>
+	</field>
+	<pageHeader>
+		<band height="470">
+			<textField>
+				<reportElement style="Column header" x="438" y="135" width="80" height="20" uuid="1f803c70-1ccf-41b5-a391-cf9dcd21e673"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="518" y="135" width="40" height="20" uuid="bdffea7a-30af-41f3-a0ce-0edd7f4103de"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="5" y="135" width="197" height="20" uuid="346d03f8-e664-4284-834a-0c256c856204"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="220" width="60" height="30" uuid="914d2f1c-090b-43c6-b3c5-20970ad8915e"/>
+				<textFieldExpression><![CDATA[$F{id_pelicula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="468" y="220" width="92" height="30" uuid="5394e128-acd2-4d44-85e2-d5406a53ab24"/>
+				<textFieldExpression><![CDATA[$F{fecha_estreno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="220" width="90" height="30" uuid="94ebbb9b-fa61-4f70-bce9-1519d28bd5d8"/>
+				<textFieldExpression><![CDATA[$F{duracion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="220" width="90" height="30" uuid="6e6fcf3d-693c-4911-812e-d5dadc41faf9"/>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="220" width="90" height="30" uuid="2216a22a-0850-4ebb-8eef-2da2067f6bf9"/>
+				<textFieldExpression><![CDATA[$F{COLUMN_6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="220" width="90" height="30" uuid="1b3b274b-b7f6-4904-990b-6a34613cb455"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="315" y="22" width="275" height="64" uuid="f66bb8d2-fd78-403e-8f0b-b03c339fa3fb"/>
+				<imageExpression><![CDATA["leaf_banner_violet.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="5" y="22" width="310" height="64" uuid="837193df-8878-4b2d-9205-36f3b6e78f59"/>
+				<textElement verticalAlignment="Middle">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Peliculas por sucursales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="179" width="55" height="21" uuid="246d2414-8964-48b1-b425-81998574e01d"/>
+				<textElement markup="none">
+					<font fontName="Id pelicula: ___________________________" size="10"/>
+				</textElement>
+				<text><![CDATA[Id Pelicula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="180" width="80" height="21" uuid="074de170-2062-41c9-8f42-e8532c60679b"/>
+				<textElement markup="none">
+					<font fontName="Id pelicula: ___________________________" size="10"/>
+				</textElement>
+				<text><![CDATA[Título]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="180" width="80" height="21" uuid="fbafde54-7fea-4cc3-a244-afb16238e434"/>
+				<textElement markup="none">
+					<font fontName="Id pelicula: ___________________________" size="10"/>
+				</textElement>
+				<text><![CDATA[Director]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="180" width="80" height="21" uuid="6790b0f3-efb8-4416-b6d7-7aa3aa2438bd"/>
+				<textElement markup="none">
+					<font fontName="Id pelicula: ___________________________" size="10"/>
+				</textElement>
+				<text><![CDATA[Género]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="179" width="80" height="21" uuid="0ef5260d-3c19-4891-9fb5-ea9e7fc12de4"/>
+				<textElement markup="none">
+					<font fontName="Id pelicula: ___________________________" size="10"/>
+				</textElement>
+				<text><![CDATA[Duración]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="468" y="180" width="90" height="21" uuid="db4afa1f-bf6b-4640-bbf2-e1bb18efe8b4"/>
+				<textElement markup="none">
+					<font fontName="Id pelicula: ___________________________" size="10"/>
+				</textElement>
+				<text><![CDATA[Fecha Estreno]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="160" width="555" height="1" uuid="9d42b78f-7e0f-42ba-9768-78b9fd5a6047">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="2.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="210" width="560" height="1" uuid="5693beb0-d129-437e-85b4-75e5de6c2c64">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="2.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+</jasperReport>

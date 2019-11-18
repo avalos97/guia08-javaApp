@@ -1,0 +1,36 @@
+
+
+SELECT f.id_funcion, f.fecha, af.valor, cf.descripcion 
+FROM funcion f 
+JOIN atributo_funcion af 
+JOIN caracteristica_funcion cf 
+ON cf.id_caracteristica=af.id_caracteristica 
+ON af.id_funcion=f.id_funcion 
+JOIN boleto b 
+JOIN asiento_sala asa 
+JOIN sala s 
+ON asa.id_sala=s.id_sala 
+ON b.id_asiento=asa.id_asiento 
+ON f.id_funcion=b.id_funcion 
+JOIN asiento a 
+JOIN atributo_asiento aa 
+JOIN caracteristica_asiento ca 
+ON ca.id_caracteristica=aa.id_caracteristica 
+ON aa.id_asiento=a.id_asiento 
+ON a.id_asiento=asa.id_asiento 
+WHERE ca.caracteristica 
+like "reclinable"
+
+
+SELECT p.id_pelicula, p.fecha_estreno, p.duracion, p.titulo, d.nombre, g.nombre 
+FROM pelicula p 
+JOIN director d 
+ON p.id_director=d.id_director 
+JOIN genero g 
+JOIN genero_pelicula gp 
+ON gp.id_genero=g.id_genero 
+ON p.id_pelicula=gp.id_pelicula 
+WHERE (d.activo=true) 
+AND (p.fecha_estreno 
+BETWEEN '$F{fecha1}'AND '$F{fecha2}') 
+AND (g.nombre='animada' OR g.nombre='terror')
